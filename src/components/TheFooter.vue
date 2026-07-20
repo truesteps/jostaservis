@@ -26,7 +26,7 @@
         </p>
         <div class="footer__social">
           <a
-            href="https://www.facebook.com/people/JOSTA-%C4%8Ci%C5%A1t%C4%9Bn%C3%AD-a-servis-vrtan%C3%BDch-studn%C3%AD/61591463190978/"
+            href="https://www.facebook.com/61591463190978/"
             class="footer__social-link"
             aria-label="Facebook"
             target="_blank"
