@@ -56,6 +56,7 @@ const steps = [
 }
 .results__img {
   width: 100%;
+  height: auto; /* override the width/height HTML attrs so aspect-ratio drives height */
   max-width: 325px;
   aspect-ratio: 1 / 1;
   object-fit: cover;

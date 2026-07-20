@@ -62,6 +62,7 @@ const signs = [
 }
 .when__img {
   width: 100%;
+  height: auto; /* override the width/height HTML attrs so aspect-ratio drives height */
   max-width: 496px;
   aspect-ratio: 1 / 1;
   object-fit: cover;

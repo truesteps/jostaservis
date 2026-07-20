@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import AppIcon from '../AppIcon.vue'
 import ObfuscatedContact from '../ObfuscatedContact.vue'
 
@@ -8,35 +8,84 @@ const botField = ref('')
 const submitted = ref(false)
 const submitting = ref(false)
 const error = ref(false)
+const DEFAULT_ERROR =
+  'Odeslání se nezdařilo. Zkuste to prosím znovu, nebo nám zavolejte.'
+const errorMessage = ref(DEFAULT_ERROR)
 
-// Netlify Forms expects an x-www-form-urlencoded POST to any path on the site,
-// with a `form-name` matching the form declared in index.html.
-function encode(data: Record<string, string>): string {
-  return Object.keys(data)
-    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
-    .join('&')
+const renderedAt = ref(0)
+onMounted(() => {
+  renderedAt.value = Date.now()
+})
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const PHONE_RE = /^\+?[\d\s()\-/.]+$/
+
+const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY as
+  | string
+  | undefined
+interface Turnstile {
+  getResponse: () => string | undefined
+  reset: () => void
 }
+const turnstile = (): Turnstile | undefined =>
+  (window as unknown as { turnstile?: Turnstile }).turnstile
 
 async function onSubmit() {
   if (submitting.value) return
+
+  const email = form.email.trim()
+  const phone = form.phone.trim()
+  if (!EMAIL_RE.test(email) || email.length > 254) {
+    error.value = true
+    errorMessage.value = 'Zadejte prosím platnou e-mailovou adresu.'
+    return
+  }
+  if (phone) {
+    const digits = phone.replace(/\D/g, '').length
+    if (!PHONE_RE.test(phone) || digits < 9 || digits > 15) {
+      error.value = true
+      errorMessage.value =
+        'Zadejte prosím platné telefonní číslo, nebo pole nechte prázdné.'
+      return
+    }
+  }
+
+  // Require a completed Turnstile challenge when it's active.
+  let turnstileToken: string | undefined
+  if (turnstileSiteKey) {
+    turnstileToken = turnstile()?.getResponse()
+    if (!turnstileToken) {
+      error.value = true
+      errorMessage.value = 'Dokončete prosím ověření, že nejste robot.'
+      return
+    }
+  }
+
   submitting.value = true
   error.value = false
+  errorMessage.value = DEFAULT_ERROR
   try {
-    const res = await fetch('/', {
+    const res = await fetch('/.netlify/functions/contact', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode({
-        'form-name': 'contact',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
         'bot-field': botField.value,
+        elapsed: Date.now() - renderedAt.value,
+        turnstileToken,
         ...form,
       }),
     })
-    if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+    if (!res.ok) {
+      const body = await res.json().catch(() => null)
+      if (body?.error) errorMessage.value = body.error
+      throw new Error(`Request failed: ${res.status}`)
+    }
     submitted.value = true
   } catch {
     error.value = true
   } finally {
     submitting.value = false
+    if (turnstileSiteKey) turnstile()?.reset()
   }
 }
 </script>
@@ -115,17 +164,9 @@ async function onSubmit() {
             <p>Ozveme se vám co nejdříve.</p>
           </div>
 
-          <form
-            v-else
-            class="contact__form"
-            name="contact"
-            method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            @submit.prevent="onSubmit"
-          >
-            <input type="hidden" name="form-name" value="contact" />
-            <!-- Honeypot: hidden from users, catches bots that auto-fill fields. -->
+          <form v-else class="contact__form" @submit.prevent="onSubmit">
+            <!-- Honeypot: hidden from users, catches bots that auto-fill fields.
+                 Checked server-side in netlify/functions/contact.ts. -->
             <p class="contact__hp" aria-hidden="true">
               <label>
                 Nevyplňujte prosím:
@@ -156,7 +197,7 @@ async function onSubmit() {
                   v-model="form.phone"
                   name="phone"
                   type="tel"
-                  placeholder="+420 123 456 789"
+                  placeholder="+420 723 456 789"
                 />
               </label>
               <label class="field">
@@ -177,9 +218,17 @@ async function onSubmit() {
                 v-model="form.message"
                 name="message"
                 rows="4"
+                maxlength="5000"
                 placeholder="O jakou službu máte zájem? Jak je studna stará a hluboká?"
+                required
               ></textarea>
             </label>
+
+            <div
+              v-if="turnstileSiteKey"
+              class="cf-turnstile"
+              :data-sitekey="turnstileSiteKey"
+            ></div>
 
             <button
               type="submit"
@@ -190,7 +239,7 @@ async function onSubmit() {
             </button>
 
             <p v-if="error" class="contact__error" role="alert">
-              Odeslání se nezdařilo. Zkuste to prosím znovu, nebo nám zavolejte.
+              {{ errorMessage }}
             </p>
 
             <p class="contact__consent">

@@ -95,6 +95,48 @@ server; the output in `dist/` is static files.
   (`node -e "console.log(Buffer.from('...').toString('base64'))"`); parts are
   concatenated verbatim so keep separators (`@`, spaces) inside the encoded text.
   Verify after builds: `grep -c '466 388' dist/index.html` should be `0`.
-- **Contact form** (`ContactSection.vue`) is client-only with no backend — `onSubmit`
-  just shows a confirmation. Wire it to an email service / API endpoint before launch.
+- **Contact form** (`ContactSection.vue`) posts JSON to a Netlify Function
+  (`netlify/functions/contact.ts`), which relays the message by e-mail via **Resend**.
+  This replaced Netlify Forms (no 100-submission cap; receiver is env-configurable).
+  Env vars (set in the Netlify UI, not in `netlify.toml`): `RESEND_API_KEY`,
+  `CONTACT_TO` (recipient — comma-separate for several), optional `CONTACT_FROM`
+  (sender on a Resend-verified domain; defaults to `JOSTA web <poptavka@jostaservis.cz>`).
+  Verify the `jostaservis.cz` domain in Resend before launch. The function uses
+  Netlify Functions v2 (web `Request`/`Response`, global `fetch`) and lives outside
+  `tsconfig`'s `include`, so `vue-tsc` skips it; Netlify bundles it with esbuild
+  (`[functions] node_bundler` in `netlify.toml`) — including its two runtime deps
+  (`validator`, `libphonenumber-js`), which stay server-only and never enter the
+  client bundle.
+- **Contact-form field validation** runs on both sides, but with different rigor by
+  design. The **server** (`contact.ts`) is authoritative: e-mail via
+  `validator.isEmail` (max 254), phone (optional) via libphonenumber-js
+  `isValidPhoneNumber(phone, 'CZ')` — real numbering-plan validation, not a
+  digit count. It also `clean()`s `name`/`phone` (strips control chars incl. CR/LF,
+  caps length) so they can't inject into the e-mail subject/headers. The **client**
+  (`ContactSection.vue`) keeps a lightweight regex check (`EMAIL_RE`/`PHONE_RE`, 9–15
+  digits) purely for instant feedback — it deliberately does **not** pull in
+  libphonenumber-js (would bloat the marketing bundle by ~100 KB); the server is the
+  real gate and its Czech error surfaces via `errorMessage` if the loose client check
+  passes something the server rejects.
+- **Contact-form bot protection** is layered, all validated in the function:
+  (1) the `bot-field` **honeypot**; (2) a **time-trap** — the client stamps
+  `renderedAt` on mount and sends the fill **duration** `elapsed` (a duration, not
+  an absolute timestamp, so client/server clock skew can't false-positive a real
+  lead); the function rejects anything faster than `MIN_FILL_MS` (1.5 s). There is
+  deliberately **no upper bound** (a long fill = tab left open = a real user, not
+  spam); (3) a **spam-content** heuristic (`looksLikeSpam` — BBCode or ≥2 links);
+  (4) **Cloudflare Turnstile**, *optional & env-gated*. Turnstile activates only
+  when both keys are set: `VITE_TURNSTILE_SITE_KEY` (public, inlined at build)
+  renders the `.cf-turnstile` widget (script in `index.html`) and
+  `TURNSTILE_SECRET_KEY` (secret) drives server `verifyTurnstile`. With no keys, the
+  widget doesn't render and verification is skipped, so the form still works — but
+  Turnstile is the only real rate-limiter (the function is stateless), so **enable
+  it before launch**. The **honeypot** failure returns a silent `{ok:true}` (a real
+  user never fills it, so no signal is leaked to bots); the **time-trap** instead
+  returns a real retryable `429` (it can occasionally catch a fast autofill+paste
+  human, and a silent OK there would lose the lead — a human's retry clears the
+  threshold). Both `console.warn` server-side so drops stay visible to the operator.
+  Content/Turnstile failures return a real Czech error the form surfaces via
+  `errorMessage`. All env vars are documented in `.env.example`
+  (`.env` is gitignored).
 - Path alias `@` → `src/`; `<script setup lang="ts">` everywhere; components PascalCase.

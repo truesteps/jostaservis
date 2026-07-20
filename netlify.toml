@@ -1,24 +1,18 @@
-# Netlify deploy configuration for the JOSTA static site (Vue 3 + vite-ssg).
-# Form handling ("contact") is auto-detected from the hidden static form in
-# index.html — configure the notification e-mail in the Netlify UI
-# (Forms → contact → Settings & notifications → add e-mail notification →
-# Stasek.Josef@email.cz). No extra config is needed here for forms.
-
 [build]
   command = "npm run build"
   publish = "dist"
 
 [build.environment]
-  # vite 8 requires Node 20.19+ / 22.12+.
   NODE_VERSION = "22"
 
-# Hashed build assets are content-addressed → cache them forever.
+[functions]
+  node_bundler = "esbuild"
+
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Baseline security headers for all responses.
 [[headers]]
   for = "/*"
   [headers.values]
