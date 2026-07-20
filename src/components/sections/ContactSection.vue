@@ -4,10 +4,40 @@ import AppIcon from '../AppIcon.vue'
 import ObfuscatedContact from '../ObfuscatedContact.vue'
 
 const form = reactive({ name: '', phone: '', email: '', message: '' })
+const botField = ref('')
 const submitted = ref(false)
+const submitting = ref(false)
+const error = ref(false)
 
-function onSubmit() {
-  submitted.value = true
+// Netlify Forms expects an x-www-form-urlencoded POST to any path on the site,
+// with a `form-name` matching the form declared in index.html.
+function encode(data: Record<string, string>): string {
+  return Object.keys(data)
+    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
+    .join('&')
+}
+
+async function onSubmit() {
+  if (submitting.value) return
+  submitting.value = true
+  error.value = false
+  try {
+    const res = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode({
+        'form-name': 'contact',
+        'bot-field': botField.value,
+        ...form,
+      }),
+    })
+    if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+    submitted.value = true
+  } catch {
+    error.value = true
+  } finally {
+    submitting.value = false
+  }
 }
 </script>
 
@@ -83,11 +113,33 @@ function onSubmit() {
             <p>Ozveme se vám co nejdříve.</p>
           </div>
 
-          <form v-else class="contact__form" @submit.prevent="onSubmit">
+          <form
+            v-else
+            class="contact__form"
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            @submit.prevent="onSubmit"
+          >
+            <!-- Honeypot: hidden from users, catches bots that auto-fill fields. -->
+            <p class="contact__hp" aria-hidden="true">
+              <label>
+                Nevyplňujte prosím:
+                <input
+                  v-model="botField"
+                  name="bot-field"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </label>
+            </p>
+
             <label class="field">
               <span class="field__label">Jméno a příjmení</span>
               <input
                 v-model="form.name"
+                name="name"
                 type="text"
                 placeholder="Jan Novák"
                 required
@@ -99,6 +151,7 @@ function onSubmit() {
                 <span class="field__label">Telefon</span>
                 <input
                   v-model="form.phone"
+                  name="phone"
                   type="tel"
                   placeholder="+420 123 456 789"
                 />
@@ -107,6 +160,7 @@ function onSubmit() {
                 <span class="field__label">E-mail</span>
                 <input
                   v-model="form.email"
+                  name="email"
                   type="email"
                   placeholder="novak@seznam.cz"
                   required
@@ -118,14 +172,23 @@ function onSubmit() {
               <span class="field__label">Vaše zpráva</span>
               <textarea
                 v-model="form.message"
+                name="message"
                 rows="4"
                 placeholder="O jakou službu máte zájem? Jak je studna stará a hluboká?"
               ></textarea>
             </label>
 
-            <button type="submit" class="btn btn--navy btn--block">
-              Odeslat nezávaznou poptávku
+            <button
+              type="submit"
+              class="btn btn--navy btn--block"
+              :disabled="submitting"
+            >
+              {{ submitting ? 'Odesílám…' : 'Odeslat nezávaznou poptávku' }}
             </button>
+
+            <p v-if="error" class="contact__error" role="alert">
+              Odeslání se nezdařilo. Zkuste to prosím znovu, nebo nám zavolejte.
+            </p>
 
             <p class="contact__consent">
               Odesláním formuláře souhlasíte se zpracováním osobních údajů pro
@@ -254,6 +317,22 @@ function onSubmit() {
 .contact__form .btn--block {
   min-height: 68px;
   font-size: 1rem;
+}
+.contact__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.contact__form .btn[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+}
+.contact__error {
+  font-size: 0.85rem;
+  color: #c0392b;
+  font-weight: 600;
 }
 .contact__consent {
   font-size: 0.78rem;

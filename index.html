@@ -14,6 +14,19 @@
   </head>
   <body>
     <div id="app"></div>
+    <!--
+      Static hidden form so Netlify's build-time bot detects the "contact" form
+      (it does not run JS, so it can't see the Vue-rendered one). The real,
+      interactive form in ContactSection.vue submits to this via AJAX. Field
+      names MUST stay in sync with that component. Honeypot = bot-field.
+    -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="tel" name="phone" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
