@@ -35,10 +35,6 @@ withDefaults(defineProps<{ variant?: 'dark' | 'light' }>(), {
   width: auto;
 }
 
-/* dark variant (footer / navy backgrounds): recolor the navy parts to white,
-   keep the cyan (#16bce1) accent. Match ANY element carrying the navy fill —
-   the wordmark + tagline live in a <g fill="#003f87"> and inherit it, so a
-   path-only selector would miss them. Case-insensitive to survive re-exports. */
 .logo--dark [fill='#003f87' i] {
   fill: #fff;
 }

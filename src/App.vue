@@ -9,7 +9,6 @@ import {
   BUSINESS,
 } from '@/config/site'
 
-// LocalBusiness structured data (single-page site → site-wide is fine).
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -38,7 +37,6 @@ useHead({
   meta: [
     { name: 'theme-color', content: '#003F87' },
     { name: 'robots', content: 'index, follow' },
-    // Constant Open Graph / Twitter fields; page-specific ones live in Home.vue.
     { property: 'og:type', content: 'website' },
     { property: 'og:site_name', content: SITE_NAME },
     { property: 'og:locale', content: 'cs_CZ' },

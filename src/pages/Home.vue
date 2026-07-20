@@ -21,7 +21,6 @@ useHead({
   link: [{ rel: 'canonical', href: `${SITE_URL}/` }],
   meta: [
     { name: 'description', content: pageDescription },
-    // Open Graph / Twitter page fields (constant ones are in App.vue).
     { property: 'og:title', content: `${pageTitle} — ${SITE_NAME}` },
     { property: 'og:description', content: pageDescription },
     { property: 'og:url', content: `${SITE_URL}/` },

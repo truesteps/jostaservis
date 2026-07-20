@@ -122,6 +122,7 @@ async function onSubmit() {
             netlify-honeypot="bot-field"
             @submit.prevent="onSubmit"
           >
+            <input type="hidden" name="form-name" value="contact" />
             <!-- Honeypot: hidden from users, catches bots that auto-fill fields. -->
             <p class="contact__hp" aria-hidden="true">
               <label>
@@ -359,15 +360,31 @@ async function onSubmit() {
 @media (max-width: 860px) {
   .contact__card {
     grid-template-columns: 1fr;
+    border-radius: 28px;
   }
   .contact__info,
   .contact__form-wrap {
     padding: 2rem;
   }
+  .contact__row {
+    margin-top: 1.5rem;
+  }
+  .contact__row-value {
+    font-size: 1.15rem;
+    word-break: break-word;
+  }
 }
 @media (max-width: 480px) {
+  .contact__info,
+  .contact__form-wrap {
+    padding: 1.5rem;
+  }
   .field-row {
     grid-template-columns: 1fr;
+  }
+  .contact__row-icon {
+    width: 48px;
+    height: 48px;
   }
 }
 </style>

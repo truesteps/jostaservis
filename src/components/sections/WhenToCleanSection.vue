@@ -95,6 +95,9 @@ const signs = [
     order: -1;
     max-width: 24rem;
   }
+  .when__img {
+    border-radius: 28px;
+  }
 }
 @media (max-width: 520px) {
   .when__list {
