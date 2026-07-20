@@ -1,29 +1,27 @@
 :root {
-  /* Brand palette — taken from the supplied logo.svg (#003F87 royal blue,
-     #16BCE1 cyan) so the site matches the brand exactly. */
   --navy: #06213f;
   --navy-2: #0a2b53;
   --navy-hero-from: #002d5f;
   --navy-hero-to: #003f87;
-  --blue: #003f87; /* brand royal blue — header, why-us band, contact panel */
-  --blue-2: #00336d; /* darker royal blue for gradient depth */
-  --accent: #58e6ff; /* design cyan — CTAs & accents (Figma hero CTA #58E6FF) */
-  --accent-2: #2fd3f0; /* cyan hover (darker) */
-  --accent-strong: #0f93b2; /* cyan for icons/text on light backgrounds */
-  --accent-ink: #001f25; /* dark label/icon color on cyan CTAs (Figma) */
-  --accent-light: #a1efff; /* light cyan for icons on the dark blue band (Figma) */
+  --blue: #003f87;
+  --blue-2: #00336d;
+  --accent: #58e6ff;
+  --accent-2: #2fd3f0;
+  --accent-strong: #0f93b2;
+  --accent-ink: #001f25;
+  --accent-light: #a1efff;
 
-  --bg: #f2f8fc; /* section background (Figma) */
-  --bg-alt: #eef4fa;
+  --bg: #f2f8fc;
+  --bg-alt: #eef5fe;
   --surface: #ffffff;
 
-  --text: #191c21; /* headings (Figma) */
-  --text-soft: #424752; /* body copy & nav links (Figma) */
+  --text: #191c21;
+  --text-soft: #424752;
   --muted: #6b7280;
   --border: #e2e8f0;
   --border-strong: #cbd5e1;
-  --card-border: rgba(194, 198, 212, 0.3); /* service card border (Figma) */
-  --icon-chip: rgba(88, 230, 255, 0.25); /* icon background tint (Figma) */
+  --card-border: rgba(194, 198, 212, 0.3);
+  --icon-chip: rgba(88, 230, 255, 0.25);
 
   --radius: 12px;
   --radius-lg: 18px;
@@ -44,7 +42,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 90px; /* offset for the sticky header on anchor jumps */
+  scroll-padding-top: 90px;
 }
 
 body {
@@ -109,7 +107,7 @@ ul {
 }
 
 .section__title {
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
 }
 
 .section__subtitle {
@@ -125,7 +123,6 @@ ul {
   font-weight: 700;
 }
 
-/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -142,12 +139,22 @@ ul {
 
 .btn--primary {
   background: var(--accent);
-  color: var(--accent-ink); /* dark label on light cyan (Figma) */
+  color: var(--accent-ink);
   box-shadow: 0 8px 20px rgba(88, 230, 255, 0.3);
 }
 
 .btn--primary:hover {
   background: var(--accent-2);
+  transform: translateY(-1px);
+}
+
+.btn--navy {
+  background: var(--blue);
+  color: #fff;
+}
+
+.btn--navy:hover {
+  background: var(--blue-2);
   transform: translateY(-1px);
 }
 

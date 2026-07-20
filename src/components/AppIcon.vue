@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// Lightweight inline icon set (Feather-style, 24x24, stroke = currentColor).
-// Add new glyphs to PATHS keyed by name; no external icon dependency.
 const PATHS: Record<string, string> = {
   sparkles:
     '<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/>',

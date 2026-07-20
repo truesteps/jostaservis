@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useHead } from '@unhead/vue'
 
-// Site-wide head defaults. Pages/sections may override title & description.
 useHead({
   titleTemplate: (title) =>
     title ? `${title} — JOSTA` : 'JOSTA — Čištění vrtaných studní',

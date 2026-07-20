@@ -60,7 +60,7 @@ const steps = [
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center;
-  border-radius: 48px;
+  border-radius: 32px;
   box-shadow: var(--shadow-card);
 }
 .results__title {
@@ -69,7 +69,7 @@ const steps = [
 }
 .results__text {
   font-size: 0.92rem;
-  color: var(--muted);
+  color: var(--text-soft);
   line-height: 1.65;
 }
 

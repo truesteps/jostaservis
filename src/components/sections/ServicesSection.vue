@@ -5,7 +5,7 @@ const services = [
   {
     icon: 'well-clean',
     title: 'Čištění vrtaných studní',
-    text: 'Odstraníme usazeniny, jemné sedimenty, jíl, písek či bahno, které se během let usazují ve vrtu.',
+    text: 'Odstranění usazenin, jemných sedimentů, jílu, písku či bahna, které se během let usazují ve vrtu.',
   },
   {
     icon: 'chart-line',
@@ -73,7 +73,7 @@ const services = [
   place-items: center;
   width: 64px;
   height: 64px;
-  border-radius: 20px;
+  border-radius: 50%;
   background: var(--icon-chip);
   color: var(--blue);
   margin-bottom: 1rem;

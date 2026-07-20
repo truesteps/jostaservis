@@ -30,7 +30,7 @@ const open = ref(false)
         </a>
       </nav>
 
-      <a href="#kontakt" class="btn btn--primary header__cta">
+      <a href="#kontakt" class="btn btn--navy header__cta">
         <AppIcon name="send" />
         Nezávazně poptat
       </a>

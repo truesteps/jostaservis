@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import AppIcon from '../AppIcon.vue'
-import ObfuscatedEmail from '../ObfuscatedEmail.vue'
+import ObfuscatedContact from '../ObfuscatedContact.vue'
 
 const form = reactive({ name: '', phone: '', email: '', message: '' })
 const submitted = ref(false)
 
 function onSubmit() {
-  // No backend yet: wire this to an email service / API endpoint.
-  // For now we acknowledge the submission client-side.
   submitted.value = true
 }
 </script>
@@ -17,7 +15,6 @@ function onSubmit() {
   <section id="kontakt" class="section contact">
     <div class="container">
       <div class="contact__card">
-        <!-- Left: info panel -->
         <div class="contact__info">
           <h2 class="contact__title">Máte dotaz?<br />Ozvěte se nám.</h2>
           <p class="contact__lead">
@@ -25,27 +22,43 @@ function onSubmit() {
             nezávaznou cenovou nabídku na míru.
           </p>
 
-          <a href="tel:+420721466388" class="contact__row">
-            <span class="contact__row-icon"><AppIcon name="phone" :size="18" /></span>
-            <span>
-              <span class="contact__row-label">Telefonický kontakt</span>
-              <span class="contact__row-value">+420 721 466 388</span>
-            </span>
-          </a>
+          <ObfuscatedContact
+            type="phone"
+            v-slot="{ value, href, ready, buildLink }"
+          >
+            <a
+              :href="href"
+              class="contact__row"
+              @mouseenter="buildLink"
+              @focus="buildLink"
+              @pointerdown="buildLink"
+            >
+              <span class="contact__row-icon"><AppIcon name="phone" :size="18" /></span>
+              <span>
+                <span class="contact__row-label">Telefonický kontakt</span>
+                <span class="contact__row-value">{{
+                  ready ? value : 'Zobrazit číslo'
+                }}</span>
+              </span>
+            </a>
+          </ObfuscatedContact>
 
-          <ObfuscatedEmail v-slot="{ email, href, ready, buildLink }">
+          <ObfuscatedContact
+            type="email"
+            v-slot="{ value, href, ready, buildLink }"
+          >
             <a
               v-if="ready"
               :href="href"
               class="contact__row"
               @mouseenter="buildLink"
               @focus="buildLink"
-              @click="buildLink"
+              @pointerdown="buildLink"
             >
               <span class="contact__row-icon"><AppIcon name="mail" :size="18" /></span>
               <span>
                 <span class="contact__row-label">E-mailová adresa</span>
-                <span class="contact__row-value">{{ email }}</span>
+                <span class="contact__row-value">{{ value }}</span>
               </span>
             </a>
             <span v-else class="contact__row">
@@ -55,7 +68,7 @@ function onSubmit() {
                 <span class="contact__row-value">Zobrazit e-mail</span>
               </span>
             </span>
-          </ObfuscatedEmail>
+          </ObfuscatedContact>
 
           <p class="contact__guarantee">
             <AppIcon name="shield-check" :size="18" />
@@ -63,7 +76,6 @@ function onSubmit() {
           </p>
         </div>
 
-        <!-- Right: form -->
         <div class="contact__form-wrap">
           <div v-if="submitted" class="contact__success">
             <AppIcon name="shield-check" :size="40" />
@@ -111,7 +123,7 @@ function onSubmit() {
               ></textarea>
             </label>
 
-            <button type="submit" class="btn btn--primary btn--block">
+            <button type="submit" class="btn btn--navy btn--block">
               Odeslat nezávaznou poptávku
             </button>
 
@@ -157,16 +169,16 @@ function onSubmit() {
   align-items: center;
   gap: 1rem;
   margin-top: 1.75rem;
-  cursor: pointer; /* email <a> has no href until hover builds the mailto */
+  cursor: pointer;
 }
 .contact__row-icon {
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
-  border-radius: 999px;
+  border-radius: 14px;
   background: rgba(255, 255, 255, 0.1);
-  color: var(--accent);
+  color: var(--accent-light);
   flex-shrink: 0;
 }
 .contact__row-label {
@@ -225,7 +237,7 @@ function onSubmit() {
 .field textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(22, 188, 225, 0.15);
+  box-shadow: 0 0 0 3px rgba(88, 230, 255, 0.18);
 }
 .field textarea {
   resize: vertical;

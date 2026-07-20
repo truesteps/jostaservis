@@ -34,7 +34,7 @@
 
 <style scoped>
 .area {
-  background: var(--surface); /* white section (Figma) */
+  background: var(--surface);
 }
 .area__grid {
   display: grid;
@@ -46,14 +46,12 @@
   justify-self: start;
   width: 100%;
   max-width: 544px;
-  /* tinted card (Figma 544×544, rx 40, #C2C6D4 @ 30% border) */
   background: var(--bg);
   border: 1px solid var(--card-border);
   border-radius: 40px;
-  padding: 1.0625rem; /* 17px inset → inner white panel */
+  padding: 1.0625rem;
 }
 .area__map-panel {
-  /* inner white panel (Figma 510×510, rx 24) */
   background: var(--surface);
   border-radius: 24px;
   aspect-ratio: 1 / 1;
@@ -71,14 +69,14 @@
   margin-top: 1.25rem;
   font-size: 1.1rem;
   line-height: 1.6;
-  color: var(--text-soft); /* #424752 (Figma) */
+  color: var(--text-soft);
 }
 .area__lead strong {
-  font-weight: 700; /* bold, not colored (Figma) */
+  font-weight: 700;
 }
 .area__note {
   margin-top: 1rem;
-  color: var(--text-soft); /* #424752 (Figma) */
+  color: var(--text-soft);
   line-height: 1.7;
 }
 .area__text {

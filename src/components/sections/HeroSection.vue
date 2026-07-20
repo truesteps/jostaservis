@@ -1,32 +1,44 @@
 <script setup lang="ts">
 import AppIcon from '../AppIcon.vue'
+import ObfuscatedContact from '../ObfuscatedContact.vue'
 </script>
 
 <template>
   <section class="hero">
-    <!-- Background photo (public/images/hero.png) with the brand-blue
-         left-to-right gradient overlaid on top. -->
     <div class="hero__overlay" aria-hidden="true"></div>
     <div class="container hero__inner">
       <div class="hero__content">
         <h1 class="hero__title">Profesionální čištění<br />vrtaných studní</h1>
         <p class="hero__text">
-          Obnovíme výkon vrtaných studní a vracíme vodě její kvalitu. Zaměřujeme
-          se na odstranění usazenin, sedimentů a nánosů, které snižují vydatnost
-          vaší studny.
+          Obnovujeme výkon vrtaných studní a vracíme vodě její kvalitu.
+          Zaměřujeme se na odstranění usazenin, sedimentů a nánosů, které snižují
+          vydatnost vaší studny.
         </p>
         <div class="hero__actions">
           <a href="#kontakt" class="btn btn--primary">
             <AppIcon name="send" />
             Nezávazně poptat
           </a>
-          <a href="tel:+420721466388" class="hero__phone">
-            <span class="hero__phone-icon"><AppIcon name="phone" :size="20" /></span>
-            <span class="hero__phone-text">
-              <span class="hero__phone-label">Zavolat specialistovi</span>
-              <span class="hero__phone-number">+420 721 466 388</span>
-            </span>
-          </a>
+          <ObfuscatedContact
+            type="phone"
+            v-slot="{ value, href, ready, buildLink }"
+          >
+            <a
+              :href="href"
+              class="hero__phone"
+              @mouseenter="buildLink"
+              @focus="buildLink"
+              @pointerdown="buildLink"
+            >
+              <span class="hero__phone-icon"><AppIcon name="phone" :size="20" /></span>
+              <span class="hero__phone-text">
+                <span class="hero__phone-label">Zavolat specialistu</span>
+                <span class="hero__phone-number">{{
+                  ready ? value : 'Zobrazit číslo'
+                }}</span>
+              </span>
+            </a>
+          </ObfuscatedContact>
         </div>
       </div>
     </div>
@@ -72,10 +84,9 @@ import AppIcon from '../AppIcon.vue'
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem; /* 16px, matches Figma button spacing */
+  gap: 1rem;
   margin-top: 2.25rem;
 }
-/* Hero CTAs are the large 72px pills from the design. */
 .hero__actions .btn--primary {
   min-height: 72px;
   padding-inline: 2rem;
@@ -88,7 +99,6 @@ import AppIcon from '../AppIcon.vue'
   min-height: 72px;
   padding: 0 1.75rem 0 1rem;
   border-radius: 999px;
-  /* Frosted-glass pill: white 10% + backdrop blur + subtle border (Figma). */
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(12px);
@@ -100,8 +110,8 @@ import AppIcon from '../AppIcon.vue'
   width: 40px;
   height: 40px;
   border-radius: 999px;
-  background: var(--accent); /* solid cyan circle (Figma) */
-  color: var(--accent-ink); /* dark icon on cyan */
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 .hero__phone-text {
   display: flex;

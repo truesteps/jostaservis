@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import AppGlyph from '../AppGlyph.vue'
 
-// Order is row-major to match the design's two columns (col 1: water-alert,
-// line-chart-down, warning-outline · col 2: dust, smell, calendar).
 const signs = [
   { icon: 'water-alert', text: 'Voda je zakalená nebo zbarvená' },
   { icon: 'dust', text: 'Ve vodě se objevuje písek či sediment' },
@@ -23,7 +21,7 @@ const signs = [
         <h2 class="section__title">Kdy je čas na čištění studny?</h2>
         <p class="section__subtitle when__subtitle">
           Včasné vyčištění může předejít nákladným opravám a obnovit správnou
-          funkci studny.
+          funkci celé studny.
         </p>
         <ul class="when__list">
           <li v-for="s in signs" :key="s.text" class="when__item">
@@ -62,11 +60,11 @@ const signs = [
 .when__img {
   width: 100%;
   max-width: 496px;
-  aspect-ratio: 1 / 1; /* square (Figma 496×496) */
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center;
   border-radius: 48px;
-  border: 4px solid rgba(215, 226, 255, 0.3); /* #D7E2FF @ 30% (Figma) */
+  border: 4px solid rgba(215, 226, 255, 0.3);
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
 }
 .when__list {
@@ -85,7 +83,7 @@ const signs = [
 .when__icon {
   display: inline-flex;
   flex-shrink: 0;
-  color: var(--blue); /* bare #003F87 glyph — no background chip (Figma) */
+  color: var(--blue);
 }
 
 @media (max-width: 900px) {

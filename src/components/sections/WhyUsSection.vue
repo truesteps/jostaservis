@@ -69,7 +69,6 @@ const reasons = [
 .why__check {
   display: inline-flex;
   flex-shrink: 0;
-  /* outlined circle + check, both #A1EFFF line-art (Figma check_circle_outline) */
   color: var(--accent-light);
 }
 

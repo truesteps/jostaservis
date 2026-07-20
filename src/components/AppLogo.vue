@@ -1,11 +1,4 @@
 <script setup lang="ts">
-// Brand logo. The supplied asset (public/images/logo.svg) is the full lockup —
-// "JOSTA" wordmark + tagline — drawn in the brand royal blue (#003F87) with a
-// cyan (#16BCE1) accent, i.e. the version for LIGHT backgrounds.
-//
-// It is inlined (rather than an <img>) so that on dark backgrounds the
-// `variant="dark"` styles below can repaint the royal-blue parts white while
-// leaving the cyan accent untouched — matching the header/footer in the design.
 withDefaults(defineProps<{ variant?: 'dark' | 'light' }>(), {
   variant: 'dark',
 })
@@ -56,10 +49,6 @@ withDefaults(defineProps<{ variant?: 'dark' | 'light' }>(), {
   width: auto;
 }
 
-/* `light` (default in the design's white header) keeps the original brand
-   colors. `dark` is for the dark footer only: repaint the royal-blue fills
-   white so the wordmark reads on the near-black background, leaving the cyan
-   (#16BCE1) accent untouched. */
 .logo--dark path[fill='#003F87'] {
   fill: #fff;
 }

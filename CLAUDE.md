@@ -81,13 +81,20 @@ server; the output in `dist/` is static files.
   design's 72px pills: the primary is solid `--accent` cyan with dark `--accent-ink`
   text; the phone button is a frosted-glass pill (white 10% + `backdrop-filter:
   blur(12px)` + subtle border) with a solid cyan circle holding a dark phone icon.
-- **Email is anti-scraping** (`src/components/ObfuscatedEmail.vue`, renderless): the
-  address is base64-encoded and assembled in-browser. The visible text appears once
-  the component **mounts** (`ready`); the clickable `mailto:` href is built only on
-  first **hover/focus/tap** (`buildLink`). It is therefore absent from both the
-  pre-rendered HTML and the JS bundle. Do not hardcode the email as plaintext or a
-  `mailto:` in markup — route it through this component. If the address changes,
-  update the base64 `PARTS` (`node -e "console.log(Buffer.from('...').toString('base64'))"`).
+- **Contact details are anti-scraping** — both the **email and the phone number** run
+  through the renderless `src/components/ObfuscatedContact.vue` (`type="email"` /
+  `type="phone"`). The value is base64-encoded (in the component's `CONTACTS` map) and
+  assembled in-browser: the visible text appears once the component **mounts**
+  (`ready`); the clickable `mailto:` / `tel:` href is built only on first
+  **hover/focus/pointer-down** (`buildLink`, `@pointerdown` makes the first mobile tap
+  work). Both are therefore absent from the pre-rendered HTML *and* the JS bundle as
+  plaintext. Do **not** hardcode the email/phone as plaintext or a `mailto:`/`tel:` in
+  markup — route every occurrence through this component (slot props
+  `{ value, href, ready, buildLink }`; the pre-mount fallback shows "Zobrazit e-mail" /
+  "Zobrazit číslo"). To change an address/number, update the base64 parts in `CONTACTS`
+  (`node -e "console.log(Buffer.from('...').toString('base64'))"`); parts are
+  concatenated verbatim so keep separators (`@`, spaces) inside the encoded text.
+  Verify after builds: `grep -c '466 388' dist/index.html` should be `0`.
 - **Contact form** (`ContactSection.vue`) is client-only with no backend — `onSubmit`
   just shows a confirmation. Wire it to an email service / API endpoint before launch.
 - Path alias `@` → `src/`; `<script setup lang="ts">` everywhere; components PascalCase.
