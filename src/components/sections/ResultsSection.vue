@@ -1,19 +1,19 @@
 <script setup lang="ts">
 const steps = [
   {
-    image: '/images/before-cleaning.png',
+    image: '/images/before-cleaning.webp',
     alt: 'Studna na začátku čištění – zanesená jílem a pískem',
     title: 'Na začátku čištění',
     text: 'Vrt byl zanesený jílem a pískem.',
   },
   {
-    image: '/images/during-cleaning.png',
+    image: '/images/during-cleaning.webp',
     alt: 'Čištění studny v průběhu prací',
     title: 'V průběhu prací',
     text: 'Nasazení profi techniky. Odsáváme sedimenty ze dna, čistíme stěny vrtu a šetrně uvolňujeme přítoky vody.',
   },
   {
-    image: '/images/after-cleaning.png',
+    image: '/images/after-cleaning.webp',
     alt: 'Výsledný stav – kompletně regenerovaná studna',
     title: 'Výsledný stav',
     text: 'Kompletně regenerovaná studna. Vrt je bez usazenin, má obnovený průtok a poskytuje opět čistou vodu.',

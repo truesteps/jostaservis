@@ -89,5 +89,11 @@
     grid-template-columns: 1fr;
     gap: 2rem;
   }
+  .area__content {
+    order: -1;
+  }
+  .area__map {
+    justify-self: center;
+  }
 }
 </style>

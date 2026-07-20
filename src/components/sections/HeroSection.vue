@@ -48,7 +48,7 @@ import ObfuscatedContact from '../ObfuscatedContact.vue'
 <style scoped>
 .hero {
   position: relative;
-  background: #002d5f url('/images/hero.png') right top / cover no-repeat;
+  background: #002d5f url('/images/hero.webp') right top / cover no-repeat;
   color: #fff;
   overflow: hidden;
 }
@@ -127,5 +127,19 @@ import ObfuscatedContact from '../ObfuscatedContact.vue'
 .hero__phone-number {
   font-weight: 700;
   font-size: 1.05rem;
+}
+
+@media (max-width: 560px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero__actions .btn--primary {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero__phone {
+    width: 100%;
+  }
 }
 </style>

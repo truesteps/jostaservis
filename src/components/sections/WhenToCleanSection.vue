@@ -33,7 +33,7 @@ const signs = [
 
       <div class="when__media">
         <img
-          src="/images/when-to-clean.png"
+          src="/images/when-to-clean.webp"
           alt="Čistá voda tekoucí z kohoutku"
           class="when__img"
           loading="lazy"
