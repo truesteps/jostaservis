@@ -30,7 +30,7 @@ const steps = [
 
       <div class="results__grid">
         <figure v-for="s in steps" :key="s.title" class="results__item">
-          <img :src="s.image" :alt="s.alt" class="results__img" loading="lazy" />
+          <img :src="s.image" :alt="s.alt" class="results__img" width="676" height="900" loading="lazy" decoding="async" />
           <figcaption>
             <h3 class="results__title">{{ s.title }}</h3>
             <p class="results__text">{{ s.text }}</p>

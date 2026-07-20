@@ -25,6 +25,7 @@ import ObfuscatedContact from '../ObfuscatedContact.vue'
           >
             <a
               :href="href"
+              :tabindex="href ? undefined : 0"
               class="hero__phone"
               @mouseenter="buildLink"
               @focus="buildLink"
@@ -101,8 +102,15 @@ import ObfuscatedContact from '../ObfuscatedContact.vue'
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+}
+/* Kept in its own @supports block so the CSS minifier can't collapse the two
+   declarations into just the -webkit- form (which Firefox does not understand,
+   losing the glass blur). See CLAUDE.md cross-browser notes. */
+@supports ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+  .hero__phone {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
 }
 .hero__phone-icon {
   display: grid;
@@ -122,7 +130,7 @@ import ObfuscatedContact from '../ObfuscatedContact.vue'
   font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.75);
 }
 .hero__phone-number {
   font-weight: 700;

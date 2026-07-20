@@ -58,6 +58,7 @@ async function onSubmit() {
           >
             <a
               :href="href"
+              :tabindex="href ? undefined : 0"
               class="contact__row"
               @mouseenter="buildLink"
               @focus="buildLink"
@@ -80,6 +81,7 @@ async function onSubmit() {
             <a
               v-if="ready"
               :href="href"
+              :tabindex="href ? undefined : 0"
               class="contact__row"
               @mouseenter="buildLink"
               @focus="buildLink"
@@ -253,7 +255,7 @@ async function onSubmit() {
   font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.75);
 }
 .contact__row-value {
   display: block;

@@ -36,7 +36,7 @@ const fontSize = typeof props.size === 'number' ? `${props.size}px` : props.size
 </script>
 
 <template>
-  <span class="glyph" :style="{ fontSize }" v-html="GLYPHS[name] ?? ''" />
+  <span class="glyph" :style="{ fontSize }" aria-hidden="true" v-html="GLYPHS[name] ?? ''" />
 </template>
 
 <style scoped>

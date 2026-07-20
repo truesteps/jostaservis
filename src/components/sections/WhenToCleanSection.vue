@@ -36,7 +36,10 @@ const signs = [
           src="/images/when-to-clean.webp"
           alt="Čistá voda tekoucí z kohoutku"
           class="when__img"
+          width="992"
+          height="992"
           loading="lazy"
+          decoding="async"
         />
       </div>
     </div>

@@ -61,6 +61,7 @@
               <a
                 v-if="ready"
                 :href="href"
+                :tabindex="href ? undefined : 0"
                 class="footer__email"
                 @mouseenter="buildLink"
                 @focus="buildLink"
@@ -75,6 +76,7 @@
               <a
                 v-if="ready"
                 :href="href"
+                :tabindex="href ? undefined : 0"
                 class="footer__email"
                 @mouseenter="buildLink"
                 @focus="buildLink"

@@ -9,7 +9,10 @@
             src="/images/where-we-operate.png"
             alt="Mapa krajů České republiky, kde působíme"
             class="area__map-img"
+            width="510"
+            height="510"
             loading="lazy"
+            decoding="async"
           />
         </div>
       </div>

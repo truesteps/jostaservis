@@ -26,8 +26,11 @@ function buildLink() {
   if (mounted.value) linkReady.value = true
 }
 
+const decode = (b64: string) =>
+  new TextDecoder().decode(Uint8Array.from(atob(b64), (c) => c.charCodeAt(0)))
+
 const value = computed(() =>
-  mounted.value ? config.value.parts.map((p) => atob(p)).join('') : '',
+  mounted.value ? config.value.parts.map(decode).join('') : '',
 )
 
 const href = computed(() => {
