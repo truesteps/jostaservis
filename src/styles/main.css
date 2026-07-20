@@ -1,0 +1,172 @@
+:root {
+  /* Brand palette — taken from the supplied logo.svg (#003F87 royal blue,
+     #16BCE1 cyan) so the site matches the brand exactly. */
+  --navy: #06213f;
+  --navy-2: #0a2b53;
+  --navy-hero-from: #002d5f;
+  --navy-hero-to: #003f87;
+  --blue: #003f87; /* brand royal blue — header, why-us band, contact panel */
+  --blue-2: #00336d; /* darker royal blue for gradient depth */
+  --accent: #58e6ff; /* design cyan — CTAs & accents (Figma hero CTA #58E6FF) */
+  --accent-2: #2fd3f0; /* cyan hover (darker) */
+  --accent-strong: #0f93b2; /* cyan for icons/text on light backgrounds */
+  --accent-ink: #001f25; /* dark label/icon color on cyan CTAs (Figma) */
+  --accent-light: #a1efff; /* light cyan for icons on the dark blue band (Figma) */
+
+  --bg: #f2f8fc; /* section background (Figma) */
+  --bg-alt: #eef4fa;
+  --surface: #ffffff;
+
+  --text: #191c21; /* headings (Figma) */
+  --text-soft: #424752; /* body copy & nav links (Figma) */
+  --muted: #6b7280;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --card-border: rgba(194, 198, 212, 0.3); /* service card border (Figma) */
+  --icon-chip: rgba(88, 230, 255, 0.25); /* icon background tint (Figma) */
+
+  --radius: 12px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 2px rgba(15, 32, 60, 0.06);
+  --shadow: 0 10px 30px rgba(15, 32, 60, 0.08);
+  --shadow-card: 0 6px 20px rgba(15, 32, 60, 0.06);
+
+  --container: 1140px;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px; /* offset for the sticky header on anchor jumps */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: 1.2;
+  color: var(--text);
+  font-weight: 700;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.section {
+  padding-block: 5rem;
+}
+
+.section--tight {
+  padding-block: 3.5rem;
+}
+
+.section__head {
+  text-align: center;
+  max-width: 44rem;
+  margin: 0 auto 3rem;
+}
+
+.section__title {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+}
+
+.section__subtitle {
+  margin-top: 0.75rem;
+  color: var(--text-soft);
+  font-size: 1rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.18s ease, transform 0.18s ease,
+    box-shadow 0.18s ease, color 0.18s ease;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--accent-ink); /* dark label on light cyan (Figma) */
+  box-shadow: 0 8px 20px rgba(88, 230, 255, 0.3);
+}
+
+.btn--primary:hover {
+  background: var(--accent-2);
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn--block {
+  width: 100%;
+  justify-content: center;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+}
