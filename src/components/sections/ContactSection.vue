@@ -33,7 +33,7 @@ function onSubmit() {
               @focus="buildLink"
               @pointerdown="buildLink"
             >
-              <span class="contact__row-icon"><AppIcon name="phone" :size="18" /></span>
+              <span class="contact__row-icon"><AppIcon name="phone" :size="22" /></span>
               <span>
                 <span class="contact__row-label">Telefonický kontakt</span>
                 <span class="contact__row-value">{{
@@ -55,14 +55,14 @@ function onSubmit() {
               @focus="buildLink"
               @pointerdown="buildLink"
             >
-              <span class="contact__row-icon"><AppIcon name="mail" :size="18" /></span>
+              <span class="contact__row-icon"><AppIcon name="mail" :size="22" /></span>
               <span>
                 <span class="contact__row-label">E-mailová adresa</span>
                 <span class="contact__row-value">{{ value }}</span>
               </span>
             </a>
             <span v-else class="contact__row">
-              <span class="contact__row-icon"><AppIcon name="mail" :size="18" /></span>
+              <span class="contact__row-icon"><AppIcon name="mail" :size="22" /></span>
               <span>
                 <span class="contact__row-label">E-mailová adresa</span>
                 <span class="contact__row-value">Zobrazit e-mail</span>
@@ -144,20 +144,22 @@ function onSubmit() {
 }
 .contact__card {
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  border-radius: var(--radius-lg);
+  grid-template-columns: 1fr 1fr;
+  border-radius: 48px;
   overflow: hidden;
   box-shadow: var(--shadow);
   background: var(--surface);
+  border: 1px solid var(--card-border);
 }
 .contact__info {
   background: var(--blue);
   color: #fff;
-  padding: 2.75rem;
+  padding: 4rem;
 }
 .contact__title {
   color: #fff;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  line-height: 1.15;
 }
 .contact__lead {
   margin-top: 1.1rem;
@@ -167,17 +169,18 @@ function onSubmit() {
 .contact__row {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-top: 1.75rem;
+  gap: 1.25rem;
+  margin-top: 2rem;
   cursor: pointer;
 }
 .contact__row-icon {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--accent-light);
   flex-shrink: 0;
 }
@@ -191,7 +194,7 @@ function onSubmit() {
 .contact__row-value {
   display: block;
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.35rem;
 }
 .contact__guarantee {
   display: flex;
@@ -205,12 +208,12 @@ function onSubmit() {
 }
 
 .contact__form-wrap {
-  padding: 2.75rem;
+  padding: 4rem;
 }
 .contact__form {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 1.5rem;
 }
 .field {
   display: flex;
@@ -225,12 +228,12 @@ function onSubmit() {
 .field input,
 .field textarea {
   width: 100%;
-  padding: 0.75rem 0.9rem;
-  border: 1px solid var(--border-strong);
-  border-radius: 10px;
+  padding: 1rem 1.15rem;
+  border: 1px solid #c2c6d4;
+  border-radius: 16px;
   font: inherit;
   color: var(--text);
-  background: #fff;
+  background: var(--bg);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .field input:focus,
@@ -241,11 +244,16 @@ function onSubmit() {
 }
 .field textarea {
   resize: vertical;
+  border-radius: 24px;
 }
 .field-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.5rem;
+}
+.contact__form .btn--block {
+  min-height: 68px;
+  font-size: 1rem;
 }
 .contact__consent {
   font-size: 0.78rem;
