@@ -64,10 +64,6 @@ const services = [
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
-}
 .card__icon {
   display: grid;
   place-items: center;
