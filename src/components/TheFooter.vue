@@ -21,8 +21,7 @@
       <div class="footer__brand">
         <AppLogo variant="dark" />
         <p class="footer__desc">
-          Profesionální čištění a údržba vrtaných studní ve Středočeském a
-          Severočeském kraji.
+          Profesionální čištění a údržba vrtaných studní ve Středočeském, Libereckém a Královéhradeckém kraji.
         </p>
         <div class="footer__social">
           <a
